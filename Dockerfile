@@ -9,15 +9,16 @@ ENV PORT=8000
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     python3-pip \
+    python3-venv \
     curl \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# تثبيت متطلبات بايثون
+# تثبيت متطلبات بايثون - باستخدام --break-system-packages للتوافق
 COPY requirements.txt .
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir --break-system-packages -r requirements.txt
 
 # نسخ ملفات المشروع
 COPY main.py Modelfile entrypoint.sh ./
